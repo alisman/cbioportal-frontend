@@ -58,9 +58,10 @@ describe('study view generic assay categorical/binary features', function() {
         // wait for generic assay data loading complete
         // and select a option
         $('div[data-test="GenericAssaySelection"]').waitForExist();
-        $('div[data-test="GenericAssaySelection"] input').setValue(
+        $('div[data-test="GenericAssayEntitySelection"] input').setValue(
             'mutational_signature_category_10'
         );
+
         $('div=Select all filtered options (1)').waitForExist();
         $('div=Select all filtered options (1)').click();
         // close the dropdown
@@ -76,6 +77,7 @@ describe('study view generic assay categorical/binary features', function() {
         const res = checkElementWithMouseDisabled(
             'div[data-test="chart-container-mutational_signature_category_10_mutational_signature_category_v2"]'
         );
+
         assertScreenShotMatch(res);
     });
 });
