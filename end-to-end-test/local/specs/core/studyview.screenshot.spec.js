@@ -25,6 +25,8 @@ const CANCER_GENE_FILTER_ICON = "[data-test='header-filter-icon']";
 const ADD_CUSTOM_CHART_TAB = '.addChartTabs a.tabAnchor.tabAnchor_Custom_Data';
 
 describe('study view generic assay categorical/binary features', function() {
+    this.retries(0);
+
     it('generic assay pie chart should be added in the summary tab', () => {
         const url = `${CBIOPORTAL_URL}/study?id=lgg_ucsf_2014_test_generic_assay`;
         goToUrlAndSetLocalStorage(url, true);
@@ -38,6 +40,7 @@ describe('study view generic assay categorical/binary features', function() {
         $(ADD_CHART_GENERIC_ASSAY_TAB).waitForDisplayed({
             timeout: WAIT_FOR_VISIBLE_TIMEOUT,
         });
+        //browser.debug();
         $(ADD_CHART_GENERIC_ASSAY_TAB).click();
 
         // Select category mutational signature profile
@@ -57,7 +60,7 @@ describe('study view generic assay categorical/binary features', function() {
 
         // wait for generic assay data loading complete
         // and select a option
-        $('div[data-test="GenericAssaySelection"]').waitForExist();
+        $('div[data-test="GenericAssayEntitySelection"]').waitForExist();
         $('div[data-test="GenericAssayEntitySelection"] input').setValue(
             'mutational_signature_category_10'
         );
@@ -69,6 +72,8 @@ describe('study view generic assay categorical/binary features', function() {
         indicators[0].click();
         var selectedOptions = $$('div[class$="multiValue"]');
         assert.equal(selectedOptions.length, 1);
+
+        browser.pause(1000);
 
         $('button=Add Chart').click();
         // Wait for chart to be added
