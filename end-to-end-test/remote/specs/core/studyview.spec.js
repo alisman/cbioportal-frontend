@@ -721,7 +721,8 @@ describe('submit genes to results view query', () => {
             goToUrlAndSetLocalStorage(url);
             waitForNetworkQuiet();
         });
-        it.only('generic assay chart should be added in the summary tab', () => {
+        it('generic assay chart should be added in the summary tab', function() {
+            this.retries(0);
             $(ADD_CHART_BUTTON).waitForEnabled({
                 timeout: 60000,
             });

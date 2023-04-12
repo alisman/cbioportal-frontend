@@ -25,9 +25,9 @@ const CANCER_GENE_FILTER_ICON = "[data-test='header-filter-icon']";
 const ADD_CUSTOM_CHART_TAB = '.addChartTabs a.tabAnchor.tabAnchor_Custom_Data';
 
 describe('study view generic assay categorical/binary features', function() {
-    this.retries(0);
+    it('generic assay pie chart should be added in the summary tab', function() {
+        this.retries(0);
 
-    it('generic assay pie chart should be added in the summary tab', () => {
         const url = `${CBIOPORTAL_URL}/study?id=lgg_ucsf_2014_test_generic_assay`;
         goToUrlAndSetLocalStorage(url, true);
 
