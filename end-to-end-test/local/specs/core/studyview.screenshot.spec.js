@@ -79,8 +79,11 @@ describe('study view generic assay categorical/binary features', function() {
         // Wait for chart to be added
         waitForNetworkQuiet();
 
+        // allow time to render
+        browser.pause(1000);
+
         const res = checkElementWithMouseDisabled(
-            'div[data-test="chart-container-mutational_signature_category_10_mutational_signature_category_v2"]'
+            'div[data-test="chart-container-mutational_signature_category_10_mutational_signature_binary_category_v2"]'
         );
 
         assertScreenShotMatch(res);
