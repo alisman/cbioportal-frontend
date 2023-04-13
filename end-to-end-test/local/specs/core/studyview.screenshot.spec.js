@@ -73,8 +73,8 @@ describe('study view generic assay categorical/binary features', function() {
         var selectedOptions = $$('div[class$="multiValue"]');
         assert.equal(selectedOptions.length, 1);
 
-        browser.pause(1000);
-
+        // this needs to be done twice for some reason on circleci
+        $('button=Add Chart').click();
         $('button=Add Chart').click();
         // Wait for chart to be added
         waitForNetworkQuiet();

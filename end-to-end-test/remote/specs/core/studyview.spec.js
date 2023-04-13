@@ -750,6 +750,9 @@ describe('submit genes to results view query', () => {
             var selectedOptions = $$('div[class$="multiValue"]');
             assert.equal(selectedOptions.length, 1);
 
+            // this is necessary to get the options selection to "take"
+            $(ADD_CHART_GENERIC_ASSAY_TAB).click();
+
             $('button=Add Chart').click();
             // Wait for chart to be added
             waitForNetworkQuiet();
