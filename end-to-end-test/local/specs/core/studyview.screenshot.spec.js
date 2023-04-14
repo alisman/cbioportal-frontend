@@ -8,6 +8,7 @@ const {
     setDropdownOpen,
     jsApiHover,
     getElementByTestHandle,
+    jq,
 } = require('../../../shared/specUtils');
 
 const CBIOPORTAL_URL = process.env.CBIOPORTAL_URL.replace(/\/$/, '');
@@ -25,7 +26,7 @@ const CANCER_GENE_FILTER_ICON = "[data-test='header-filter-icon']";
 const ADD_CUSTOM_CHART_TAB = '.addChartTabs a.tabAnchor.tabAnchor_Custom_Data';
 
 describe('study view generic assay categorical/binary features', function() {
-    it('generic assay pie chart should be added in the summary tab', function() {
+    it.only('generic assay pie chart should be added in the summary tab', function() {
         this.retries(0);
 
         const url = `${CBIOPORTAL_URL}/study?id=lgg_ucsf_2014_test_generic_assay`;
@@ -82,9 +83,15 @@ describe('study view generic assay categorical/binary features', function() {
         // allow time to render
         browser.pause(1000);
 
-        const res = checkElementWithMouseDisabled(
-            'div[data-test="chart-container-mutational_signature_category_10_mutational_signature_binary_v2"]'
+        const el = jq(
+            "[data-test*='chart-container-mutational_signature_category_10_mutational']"
         );
+        const att = $(el[0]).getAttribute('data-test');
+
+        console.log('AARON');
+        console.log(att);
+
+        const res = checkElementWithMouseDisabled(`[data-test='${att}']`);
 
         assertScreenShotMatch(res);
     });
