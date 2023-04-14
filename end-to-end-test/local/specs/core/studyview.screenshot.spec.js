@@ -26,7 +26,7 @@ const CANCER_GENE_FILTER_ICON = "[data-test='header-filter-icon']";
 const ADD_CUSTOM_CHART_TAB = '.addChartTabs a.tabAnchor.tabAnchor_Custom_Data';
 
 describe('study view generic assay categorical/binary features', function() {
-    it.only('generic assay pie chart should be added in the summary tab', function() {
+    it('generic assay pie chart should be added in the summary tab', function() {
         this.retries(0);
 
         const url = `${CBIOPORTAL_URL}/study?id=lgg_ucsf_2014_test_generic_assay`;
@@ -76,7 +76,7 @@ describe('study view generic assay categorical/binary features', function() {
 
         // this needs to be done twice for some reason on circleci
         $('button=Add Chart').click();
-        $('button=Add Chart').click();
+        //$('button=Add Chart').click();
         // Wait for chart to be added
         waitForNetworkQuiet();
 
