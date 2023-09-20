@@ -343,6 +343,8 @@ export default class OncoprintModel {
     constructor(params: InitParams) {
         const model = this;
 
+        (window as any).donkey = model;
+
         this.sort_config = {};
         this.rendering_suppressed_depth = 0;
 
@@ -1070,7 +1072,8 @@ export default class OncoprintModel {
     }
 
     public getGapSize() {
-        return this.getCellWidth(true);
+        return 40;
+        //return this.getCellWidth(true) * 4;
     }
 
     public getCellWidth(base?: boolean) {
@@ -1702,6 +1705,12 @@ export default class OncoprintModel {
         } else {
             return this.header_tops_zoomed.get()[track_group_index];
         }
+    }
+
+    public getGapOffsets(): any {
+        return _.mapValues(this.ids_after_a_gap.get(), (v, k) => {
+            return this.getZoomedColumnLeft(k);
+        });
     }
 
     public getCellTops(

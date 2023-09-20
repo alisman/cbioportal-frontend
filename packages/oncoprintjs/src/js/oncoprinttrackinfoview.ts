@@ -1,5 +1,6 @@
 import svgfactory from './svgfactory';
 import $ from 'jquery';
+import _ from 'lodash';
 import OncoprintToolTip from './oncoprinttooltip';
 import OncoprintModel from './oncoprintmodel';
 
@@ -11,6 +12,8 @@ export default class OncoprintTrackInfoView {
     private font_weight = 'bold';
     private width = 0;
     private $label_elts: JQuery[] = [];
+    private $label_elts1: JQuery[] = [$("<span id='aaron'>3</span>")];
+
     private rendering_suppressed = false;
     private minimum_track_height: number;
 
@@ -20,8 +23,6 @@ export default class OncoprintTrackInfoView {
         this.$ctr = $('<div></div>')
             .css({
                 position: 'absolute',
-                'overflow-y': 'hidden',
-                'overflow-x': 'hidden',
             })
             .appendTo(this.$div);
         this.$text_ctr = $('<div></div>')
@@ -69,13 +70,19 @@ export default class OncoprintTrackInfoView {
                         'font-weight': self.font_weight,
                         'font-size': font_size,
                     })
-                    .addClass('noselect');
+                    .addClass('noselect')
+                    .addClass('xlabel');
                 const text = model.getTrackInfo(tracks[i]);
                 if (!text) {
                     return;
                 }
                 $new_label.text(text);
                 $new_label.appendTo(self.$text_ctr);
+
+                // _.forIn(model.getGapOffsets(),(v,k)=>{
+                //     console.log("aaron", v);
+                // });
+
                 self.$label_elts.push($new_label);
                 setTimeout(function() {
                     $new_label
@@ -96,7 +103,18 @@ export default class OncoprintTrackInfoView {
                         .on('mouseleave', function() {
                             self.tooltip.hideIfNotAlreadyGoingTo(150);
                         });
-                }, 0); // delay to give time for render before adding events
+
+                    console.log('cheevers', model.getGapOffsets());
+
+                    _.forEach(model.getGapOffsets(), (offset, key) => {
+                        $new_label
+                            .clone()
+                            .css({
+                                left: offset,
+                            })
+                            .appendTo(self.$text_ctr);
+                    });
+                }, 1000); // delay to give time for render before adding events
                 const top =
                     label_tops[tracks[i]] +
                     (model.getCellHeight(tracks[i]) -
@@ -109,6 +127,8 @@ export default class OncoprintTrackInfoView {
                     $new_label[0].clientWidth
                 );
             })();
+
+            setTimeout(() => {}, 5000);
         }
         if (this.width > 0) {
             this.width += 10;
@@ -232,7 +252,10 @@ export default class OncoprintTrackInfoView {
             );
             text_elt.setAttribute('dy', '0.35em');
             root.appendChild(text_elt);
+
+            //model.ids_after_a_gap.value
         }
+
         return root;
     }
 }
