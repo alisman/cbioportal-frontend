@@ -1341,7 +1341,7 @@ export default class CBioPortalAPIInternal {
         $queryParameters ? : any
     }): string {
         let queryParameters: any = {};
-        let path = '/api/alteration-enrichments/fetch';
+        let path = '/api/alteration-enrichmentss/fetch';
         if (parameters['enrichmentType'] !== undefined) {
             queryParameters['enrichmentType'] = parameters['enrichmentType'];
         }
@@ -1372,7 +1372,7 @@ export default class CBioPortalAPIInternal {
         const domain = parameters.$domain ? parameters.$domain : this.domain;
         const errorHandlers = this.errorHandlers;
         const request = this.request;
-        let path = '/api/alteration-enrichments/fetch';
+        let path = '/api/alteration-enrichmentss/fetch';
         let body: any;
         let queryParameters: any = {};
         let headers: any = {};

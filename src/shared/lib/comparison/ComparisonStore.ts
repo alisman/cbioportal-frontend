@@ -14,6 +14,7 @@ import {
 import { GroupComparisonTab } from '../../../pages/groupComparison/GroupComparisonTabs';
 import {
     findFirstMostCommonElt,
+    getBrowserWindow,
     MobxPromise,
     onMobxPromise,
     remoteData,
@@ -1325,12 +1326,17 @@ export default abstract class ComparisonStore extends AnalysisStore
                     } as unknown) as AlterationFilter,
                 };
 
-                return internalClient.fetchAlterationEnrichmentsUsingPOST({
-                    enrichmentType: this.usePatientLevelEnrichments
-                        ? 'PATIENT'
-                        : 'SAMPLE',
-                    molecularProfileCasesGroupAndAlterationTypeFilter: groupsAndAlterationTypes,
-                });
+                const doIt = () =>
+                    internalClient.fetchAlterationEnrichmentsUsingPOST({
+                        enrichmentType: this.usePatientLevelEnrichments
+                            ? 'PATIENT'
+                            : 'SAMPLE',
+                        molecularProfileCasesGroupAndAlterationTypeFilter: groupsAndAlterationTypes,
+                    });
+
+                //getBrowserWindow().shoot = doIt;
+
+                return doIt();
             }
             return Promise.resolve([]);
         },
@@ -1361,7 +1367,7 @@ export default abstract class ComparisonStore extends AnalysisStore
             this.selectedStudyMutationEnrichmentProfileMap.result!,
         ],
         referenceGenesPromise: this.hugoGeneSymbolToReferenceGene,
-        fetchData: () => {
+        fetchData: async () => {
             if (
                 this.mutationsEnrichmentDataRequestGroups.result &&
                 this.mutationsEnrichmentDataRequestGroups.result.length > 1 &&
@@ -1391,7 +1397,6 @@ export default abstract class ComparisonStore extends AnalysisStore
                             .includeUnknownStatusMutations,
                     } as unknown) as AlterationFilter,
                 };
-
                 return internalClient.fetchAlterationEnrichmentsUsingPOST({
                     enrichmentType: this.usePatientLevelEnrichments
                         ? 'PATIENT'
