@@ -113,6 +113,7 @@ import AnalysisStore from './AnalysisStore';
 import { AnnotatedMutation } from 'shared/model/AnnotatedMutation';
 import { compileMutations } from './AnalysisStoreUtils';
 import { FeatureFlagEnum } from 'shared/featureFlags';
+import axios from 'axios';
 
 export enum OverlapStrategy {
     INCLUDE = 'Include',
@@ -1334,7 +1335,7 @@ export default abstract class ComparisonStore extends AnalysisStore
                         molecularProfileCasesGroupAndAlterationTypeFilter: groupsAndAlterationTypes,
                     });
 
-                //getBrowserWindow().shoot = doIt;
+                getBrowserWindow().shoot = doIt;
 
                 return doIt();
             }
@@ -1409,13 +1410,10 @@ export default abstract class ComparisonStore extends AnalysisStore
     });
 
     readonly genesSortedByMutationFrequency = remoteData<string[]>({
-        await: () => [
-            this.mutationsEnrichmentData,
-            this.alterationsEnrichmentAnalysisGroups,
-        ],
+        await: () => [this.alterationsEnrichmentAnalysisGroups],
         invoke: async () => {
             const alterationRowData: AlterationEnrichmentRow[] = getAlterationRowData(
-                this.mutationsEnrichmentData.result!,
+                [],
                 this.resultsViewStore
                     ? this.resultsViewStore.hugoGeneSymbols
                     : [],

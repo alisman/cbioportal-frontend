@@ -141,6 +141,7 @@ export default class GroupComparisonPage extends React.Component<
             this.store.alterationsEnrichmentAnalysisGroups,
             this.store.genesSortedByMutationFrequency,
             this.store.genesSortedByAlterationFrequency,
+            this.store.customDriverAnnotationReport,
         ],
         render: () => {
             return (
